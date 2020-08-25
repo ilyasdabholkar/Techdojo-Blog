@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- Page Header -->
+{% set fname = 'img/' + post.img_file %} <!--jinja variable fname-->
+{% set STATIC = 'static' %}
+<header class="masthead" style="background-image: url('{{ url_for(STATIC,filename=fname) }}')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-heading">
+          <h1>{{post.post_title}}</h1>
+          <h2 class="subheading">{{post.subheading}}</h2>
+          <span class="meta">Posted by {{post.post_author}} on {{post.post_date.strftime('%B %d,%Y')}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+          {{post.post_content|safe}}
+      </div>
+    </div>
+  </div>
+</article>
+
+{% endblock %}  

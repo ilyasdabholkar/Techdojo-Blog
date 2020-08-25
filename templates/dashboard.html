@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block body %}
+  
+<!-- Page Header -->
+{% set STATIC = 'static' %}
+{% set IMAGE_FILE = 'img/dashboard.jpg' %}
+<header class="masthead" style="background-image: url('{{ url_for(STATIC,filename=IMAGE_FILE) }}')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>ADMIN PAGE</h1>
+          <span class="subheading">Manage Your Posts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <h2>Actions</h2>
+      <hr>
+      <a href="/edit/0"><button class="btn btn-primary" style="background-color: green;border-radius: 15px;">Add New Post</button></a>
+      <hr>
+      <h2>Upload Blog Images</h2>
+      <hr>
+      <form action="/uploader" method="post" enctype="multipart/form-data">
+        <input type="file" name="uploadedfile" style="background-color:skyblue; color:red">
+        <button type="submit" class="btn btn-primary" style="border-radius: 15px;">Upload</button>
+      </form>
+      <hr>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Post ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Date</th>
+            <th scope="col">Author</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        {% for post in list_posts.items %}
+        <tbody>
+          <tr>
+            <th scope="row">{{post.post_no}}</th>
+            <td>{{post.post_title}}</td>
+            <td>{{post.post_date}}</td>
+            <td>{{post.post_author}}</td>
+            <td><a href="/edit/{{post.post_no}}"><button class="btn btn-primary"style="border-radius: 10px;">Edit</button></a></td>
+            <td><a href="/delete/{{post.post_no}}"><button class="btn btn-primary" style="border-radius: 10px;color:gold;">Delete</button></a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <hr>
+
+<!-- Pager -->
+      <div class="clearfix">
+        <a style="background-color: red;color:seashell;border-radius: 15px;" class="btn btn-primary float-right" href="/logout">LOGOUT</a>
+      </div>
+      <div class="clearfix">
+        {% for page_num in list_posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+          {% if page_num %}
+            {% if list_posts.page == page_num %}
+              <a class="btn btn-primary "  href="{{ url_for('dashboard',page=page_num)}}">{{page_num}}</a>
+            {% else %}
+              <a class="btn btn-primary " style="background-color: white; color:#0085a1" href="{{ url_for('dashboard',page=page_num)}}">{{page_num}}</a>
+            {% endif %}
+          {% else %}
+            ...
+          {% endif %}
+        {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

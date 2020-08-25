@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- Page Header -->
+{% set STATIC = 'static' %}
+{% set IMAGE_FILE = 'img/home__bg.jpg' %}
+<header class="masthead" style="background-image: url('{{ url_for(STATIC,filename=IMAGE_FILE ) }}')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>{{params['blog_name']}}</h1>
+          <span class="subheading">{{params['blog_subheading']}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      {% for post in posts.items %}
+        <div class="post-preview">
+          <a href="/post/{{post.slug}}">
+            <h2 class="post-title">{{ post.post_title }}</h2>
+            <h3 class="post-subtitle">{{post.subheading}}</h3>
+          </a>
+          <p class="post-meta">Posted by {{post.post_author }} on {{post.post_date.strftime('%B %d,%Y')}}</p>
+        </div>
+        {% set lil_content = post.post_content|safe %}
+        {{lil_content[0:120]}}....
+        <hr>     
+      {% endfor %}
+    
+<!-- Pager -->
+      <div class="clearfix">
+        {% for page_num in posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+          {% if page_num %}
+            {% if posts.page == page_num %}
+              <a class="btn btn-primary "  href="{{ url_for('index',page=page_num)}}">{{page_num}}</a>
+            {% else %}
+              <a class="btn btn-primary " style="background-color: white; color:#0085a1" href="{{ url_for('index',page=page_num)}}">{{page_num}}</a>
+            {% endif %}
+          {% else %}
+            ...
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

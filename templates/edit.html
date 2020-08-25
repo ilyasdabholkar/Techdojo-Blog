@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- Page Header -->
+{% set STATIC = 'static' %}
+{% set IMAGE_FILE = 'img/dashboard.jpg' %}
+<header class="masthead" style="background-image: url('{{ url_for(STATIC,filename=IMAGE_FILE) }}')";>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>ADMIN PAGE</h1>
+          <span class="subheading">Manage Your Posts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <h1>Add/Edit Post</h1>
+      <form name="sentMessage" id="contactForm" action="/edit/{{sno}}" method="post" novalidate>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Title</label>
+            <input type="text" class="form-control" placeholder="Title" id="title" name='title' value="{{post.post_title}}">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Subheading</label>
+            <input type="text" class="form-control" placeholder="Subheading" id="subheading" name='subheading' value="{{post.subheading}}">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <label>Slug</label>
+            <input type="text" class="form-control" placeholder="Slug" id="slug" name='slug' value="{{post.slug}}">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Content</label>
+            <textarea rows="10" class="form-control" placeholder="Content" id="content" name="content">{{post.post_content}}</textarea>
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Image File</label>
+            <input class="form-control" placeholder="Image File" id="img" name="img" value="{{post.img_file}}"></input>
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Author</label>
+            <input class="form-control" placeholder="Author" id="author" name="author" value="{{post.post_author}}"></input>
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <br>
+        <div id="success"></div>
+        <button type="submit" class="btn btn-primary"  id="sendMessageButton">Submit</button>
+      </form>
+      <hr>
+<!-- Pager -->
+<div class="clearfix">
+  <a style="background-color:green;color:seashell" class="btn btn-primary float-right" href="/dashboard">Dashboard</a>
+</div>
+
+{% endblock %}
