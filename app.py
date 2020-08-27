@@ -1,4 +1,4 @@
-from flask import Flask,url_for,render_template,request,session
+from flask import Flask,url_for,render_template,request,session,flash
 from flask import redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import desc
@@ -167,6 +167,7 @@ def contact():
 						recipients=[params['gmail']],
 						body= msg + "\n phone:" + str(phone)
 						)
+		flash("Thanks for contacting us. We will get back to you soon","success")
 	return render_template('/contact.html',params=params)
 	
 app.run(debug=True)
